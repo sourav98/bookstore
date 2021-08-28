@@ -58,13 +58,14 @@ public class CustomerServiceImpl implements ICustomerService {
 	}
 
 	@Override
-	public void signOut(String email) {
+	public Customer signOut(String email) {
 		Optional <Customer> opt=customerRepo.findByEmail(email);
-		if(opt.isPresent()) {
+	
 			Customer c=opt.get();
 			c.setLoggedIn(false);
 			customerRepo.save(c);
-		}
+	
+		return c;
 
 	}
 

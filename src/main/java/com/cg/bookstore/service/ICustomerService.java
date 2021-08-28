@@ -14,6 +14,6 @@ public interface ICustomerService {
 	public Customer getCustomerById(int customerId);
 	
 	public Customer signIn(SignInDto signInDto);
-	public void signOut(String email);
+	public Customer signOut(String email);
 	
 }
