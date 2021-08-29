@@ -15,5 +15,5 @@ public interface ICustomerService {
 	
 	public Customer signIn(SignInDto signInDto);
 	public Customer signOut(String email);
-	
+	public List<Customer> listAllCustomers();
 }

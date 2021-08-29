@@ -52,7 +52,12 @@ public class CustomerController {
 	
 	@PutMapping("/signout/{email}")
 	public ResponseEntity<Customer> signOut(@PathVariable("email") String email) throws InvalidCredentialsException {
-		customerServ.signOut(email);
+		
 		return new ResponseEntity<>(customerServ.signOut(email), HttpStatus.OK);
+	}
+	
+	@GetMapping("/customer/all")
+	public List<Customer> listAllCustomers() {
+		return (customerServ.listAllCustomers());
 	}
 }

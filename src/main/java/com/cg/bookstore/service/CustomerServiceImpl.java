@@ -69,4 +69,10 @@ public class CustomerServiceImpl implements ICustomerService {
 
 	}
 
+	@Override
+	public List<Customer> listAllCustomers() {
+		List<Customer> opt = customerRepo.findAll();
+		return opt;
+	}
+
 }
