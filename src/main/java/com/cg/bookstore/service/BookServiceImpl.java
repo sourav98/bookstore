@@ -4,6 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import java.util.List;
 import java.util.Optional;
+import java.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,7 +35,7 @@ public class BookServiceImpl implements IBookService
 		LOGGER.info("Adding a new Book using Book Service Implementation");
 		List<Book> book = bookRepo.getBookByTitle(b.getTitle());
 		Optional<Category> category = catRepo.findById(b.getCategory());
-
+		
 		if (!(category.isPresent()))
 		{
 			LOGGER.error("No category found");
