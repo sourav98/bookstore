@@ -15,6 +15,7 @@ public class OrderDetailsCustomerDto {
 	Integer quantity;
 	String fullName;
 	int customerId;
-	double orderTotal;
+	double orderTotal; 
+	String deliveryStatus;
 	
 }
