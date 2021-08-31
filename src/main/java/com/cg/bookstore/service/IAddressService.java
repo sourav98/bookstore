@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.cg.bookstore.dto.AddressCustomerDto;
 import com.cg.bookstore.dto.AddressStatusDto;
 import com.cg.bookstore.entities.Address;
 
@@ -26,5 +27,8 @@ public interface IAddressService {
 	List<AddressStatusDto> getAddressStatusByCountry(); //implementation done, exception handling done, Mockito test done
 	List<AddressStatusDto> getAddressStatusBySpecificCity(String city); //implementation done, exception handling done, Mockito test done
 	List<AddressStatusDto> getAddressStatusBySpecificCountry(String country); //implementation done, exception handling done, Mockito test done
+	List<AddressCustomerDto> getAddressCustomer();
 }
+
+
 

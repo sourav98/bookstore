@@ -17,7 +17,7 @@ public interface IOrderDetailsRepository extends JpaRepository<OrderDetails, Int
 	
 	// To display all orders by a particular customer
 	
-	@Query("select new com.cg.bookstore.dto.OrderDetailsCustomerDto(b.bookId,b.title,b.price,od.quantity, c.fullName,c.customerId,od.orderTotal,od.deliveryStatus) from OrderDetails od inner join Book b on od.book.bookId=b.bookId inner join BookOrder bo on od.bookOrder.orderId=bo.orderId inner join Customer c on bo.customer.customerId=c.customerId where bo.customer.customerId=:customerId ")
+	@Query("select new com.cg.bookstore.dto.OrderDetailsCustomerDto(od.orderDetailsId,b.bookId,b.title,b.price,od.quantity, c.fullName,c.customerId,od.orderTotal,od.deliveryStatus) from OrderDetails od inner join Book b on od.book.bookId=b.bookId inner join BookOrder bo on od.bookOrder.orderId=bo.orderId inner join Customer c on bo.customer.customerId=c.customerId where bo.customer.customerId=:customerId ")
 	List<OrderDetailsCustomerDto> listOrderByCustomer(@Param("customerId") int customerId);
 
 	// To display orders based on books
@@ -26,7 +26,7 @@ public interface IOrderDetailsRepository extends JpaRepository<OrderDetails, Int
 	List<OrderDetailsBookDto> viewOrderByBook(@Param("bookId") int bookId);
 }
 
-
+ 
 
 
 

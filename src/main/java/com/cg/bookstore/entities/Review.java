@@ -1,15 +1,25 @@
 package com.cg.bookstore.entities;
 
 import java.time.LocalDate;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Table;
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+
 import lombok.Data;
 
 @Entity
@@ -20,8 +30,16 @@ public class Review
 
 	@Id
 	private int reviewId;
-	// private Book book;
-	// private Customer customer;
+	
+	@ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE , CascadeType.REFRESH})
+	@JoinColumn(name="book_id_fk")
+	@OnDelete(action = OnDeleteAction.NO_ACTION)
+	private Book book;
+	
+	@OneToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE , CascadeType.REFRESH})
+	@JoinColumn(name="customer_id_fk")
+	@OnDelete(action = OnDeleteAction.NO_ACTION)
+	private Customer customer;
 	@Column(name = "head_Line")
 	@NotEmpty
 	@Size(min = 5, max = 40, message = "headLine should be between 5 and 40 characters")

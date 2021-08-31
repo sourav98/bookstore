@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -20,10 +21,11 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cg.bookstore.dto.AddressCustomerDto;
 import com.cg.bookstore.dto.AddressStatusDto;
 import com.cg.bookstore.entities.Address;
 import com.cg.bookstore.service.IAddressService;
-
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 public class AddressController
 {
@@ -143,5 +145,12 @@ public class AddressController
 	{
 		LOGGER.info("Getting Address by Country");
 		return new ResponseEntity<>(addServ.getAddressStatusBySpecificCountry(country), HttpStatus.OK);
+	}
+	
+	@GetMapping("/address/customer")
+	public ResponseEntity<List<AddressCustomerDto>>  getAddressCustomer()
+	{
+		LOGGER.info("Getting Address by Country");
+		return new ResponseEntity<>(addServ.getAddressCustomer(), HttpStatus.OK);
 	}
 }

@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class OrderDetailsCustomerDto {
 	
+	int orderDetailsId;
 	int bookId;
 	String title;
 	String price;

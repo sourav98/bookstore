@@ -3,12 +3,20 @@ package com.cg.bookstore.service;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.cg.bookstore.dto.OrderDetailsCustomerDto;
+import com.cg.bookstore.dto.ReviewDto;
+import com.cg.bookstore.entities.Book;
+import com.cg.bookstore.entities.Customer;
 import com.cg.bookstore.entities.Review;
 import com.cg.bookstore.exception.ReviewNotFoundException;
+import com.cg.bookstore.repository.IBookRepository;
+import com.cg.bookstore.repository.ICustomerRepository;
 import com.cg.bookstore.repository.IReviewRepository;
 
 @Service
@@ -18,6 +26,11 @@ public class ReviewServiceImpl implements IReviewService
 	final static Logger LOGGER = LogManager.getLogger(ReviewServiceImpl.class);
 	@Autowired
 	IReviewRepository reviewRepository;
+	
+	@Autowired
+	IBookRepository bookRepo;
+	@Autowired
+	ICustomerRepository customerRepo;
 
 	@Override
 	/*** to get list of all reviews ***/
@@ -39,10 +52,14 @@ public class ReviewServiceImpl implements IReviewService
 	/*** to add review ***/
 
 	@Override
-	public Review addReview(Review review)
+	public Review addReview(ReviewDto reviewDto)
 	{
 		LOGGER.info("Adding new review using Review Service Implementation");
-		Optional<Review> opt = reviewRepository.findById(review.getReviewId());
+		Optional<Book> book = bookRepo.findById(reviewDto.getBookId());
+		Optional<Review> opt = reviewRepository.findById(reviewDto.getReviewId());
+		Optional<Customer> customer = customerRepo.findById(reviewDto.getCustomerId());
+		Review review = new Review();
+		
 		if (opt.isPresent())
 		{
 			LOGGER.error("Review present");
@@ -52,6 +69,19 @@ public class ReviewServiceImpl implements IReviewService
 																												// ReviewExceptionHandler--->
 																												// handleException
 
+		}
+		else {
+			if (book.isPresent() ) {
+			review.setReviewId(reviewDto.getReviewId());
+				review.setBook(book.get());
+				review.setComment(reviewDto.getComment());
+				review.setHeadLine(reviewDto.getHeadLine());
+				review.setRating(reviewDto.getRating());
+				review.setReviewOn(reviewDto.getReviewOn());	
+				review.setCustomer(customer.get());
+				
+			}
+			
 		}
 		return reviewRepository.save(review);
 	}
@@ -114,6 +144,26 @@ public class ReviewServiceImpl implements IReviewService
 																									// handleException
 		}
 		return (Review) opt.get();
+	}
+	
+	public List<Review> viewReviewByCustomerId(int customerId)
+	{
+		LOGGER.info("Fetching a review by id using Review Service Implementation");
+		Optional<Customer> customer = customerRepo.findById(customerId);
+		List<Review> opt = new ArrayList<>();
+	
+		
+		
+		if (!customer.isPresent())
+		{
+			LOGGER.error("No review present");
+			throw new ReviewNotFoundException("Review not found with the given id: " + customerId); // exception handled
+																									// in
+																									// ReviewExceptionHandler--->
+																									// handleException
+		}
+		reviewRepository.viewReviewByCustomerId(customerId).forEach(opt::add);
+		return opt;
 	}
 
 	/*** update headline by review id ***/

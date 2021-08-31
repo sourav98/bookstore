@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cg.bookstore.repository.IAddressRepository;
+import com.cg.bookstore.dto.AddressCustomerDto;
 import com.cg.bookstore.dto.AddressStatusDto;
 import com.cg.bookstore.entities.Address;
 import com.cg.bookstore.exception.AddressFoundException;
@@ -219,6 +220,13 @@ public class AddressServiceImpl implements IAddressService {
 			LOGGER.error("No addresses found from given Country");
 			throw new AddressNotFoundException("No orders from country: " + country + " yet!");
 		}
+		return response;
+	}
+
+
+	@Override
+	public List<AddressCustomerDto> getAddressCustomer() {
+		List<AddressCustomerDto> response = addRepo.getAddressCustomer();
 		return response;
 	}
 

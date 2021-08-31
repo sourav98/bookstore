@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import com.cg.bookstore.dto.AddressCustomerDto;
 import com.cg.bookstore.dto.AddressStatusDto;
 import com.cg.bookstore.entities.Address;
 import com.cg.bookstore.entities.BookOrder;
@@ -31,5 +32,9 @@ public interface IAddressRepository extends JpaRepository<Address, Integer>
 
 	@Query(value = "select new com.cg.bookstore.dto.AddressStatusDto(b.orderId, b.status, a.city) from Address a inner join BookOrder b on b.shippingAddress.addressId=a.addressId where a.country=:country")
 	List<AddressStatusDto> getAddressStatusBySpecificCountry(@Param("country") String country);
+	
+	@Query(value = "select new com.cg.bookstore.dto.AddressCustomerDto(b.customer.customerId,b.customer.fullName,a.address,a.city,a.pincode) from Address a inner join BookOrder b on b.shippingAddress.addressId=a.addressId inner join Customer c on c.customerId=b.customer.customerId")
+	List<AddressCustomerDto> getAddressCustomer();
 
+	
 }

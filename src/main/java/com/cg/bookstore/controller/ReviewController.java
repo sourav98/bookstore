@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.cg.bookstore.dto.ReviewDto;
 import com.cg.bookstore.entities.Review;
 import com.cg.bookstore.service.IReviewService;
 
@@ -34,10 +36,10 @@ public class ReviewController
 	}
 
 	@PostMapping("/review")
-	public Review addReview(@Valid @RequestBody Review review)
+	public Review addReview(@Valid @RequestBody ReviewDto reviewDto)
 	{
 		LOGGER.info("Adding review using post mapping via Review Controller");
-		return revServ.addReview(review);
+		return revServ.addReview(reviewDto);
 	}
 
 	@DeleteMapping("/review/{id}")
@@ -87,6 +89,13 @@ public class ReviewController
 	{
 		LOGGER.info("Fetching a particular review using get mapping via Review Controller");
 		return revServ.viewReviewById(id);
+	}
+	
+	@GetMapping("/review/customer/{customerId}")
+	public List<Review> viewReviewByCustomerId(@PathVariable("customerId") int customerId)
+	{
+		LOGGER.info("Fetching a particular review using get mapping via Review Controller");
+		return revServ.viewReviewByCustomerId(customerId);
 	}
 
 }
