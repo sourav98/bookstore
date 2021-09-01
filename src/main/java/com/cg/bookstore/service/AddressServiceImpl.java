@@ -10,9 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cg.bookstore.repository.IAddressRepository;
+import com.cg.bookstore.repository.ICustomerRepository;
 import com.cg.bookstore.dto.AddressCustomerDto;
+import com.cg.bookstore.dto.AddressDto;
 import com.cg.bookstore.dto.AddressStatusDto;
 import com.cg.bookstore.entities.Address;
+import com.cg.bookstore.entities.Customer;
 import com.cg.bookstore.exception.AddressFoundException;
 import com.cg.bookstore.exception.AddressNotFoundException;
 
@@ -24,16 +27,25 @@ public class AddressServiceImpl implements IAddressService {
 	@Autowired
 	IAddressRepository addRepo;
 	
+	@Autowired
+	ICustomerRepository customerRepo;
 	
 	//add address
 	@Override
-	public Address addAddress(Address address) {
+	public Address addAddress(AddressDto addressDto) {
 		LOGGER.info("Adding address using Address Service implementation");
-		Optional<Address> opt = addRepo.findById(address.getAddressId());
-		if(opt.isPresent()) {
-			LOGGER.error("Address already present with given id");
-			throw new AddressFoundException("Address with given id is already present in database"); //exception handled in AddressExceptionHandler---> handleAddressFoundException
+		
+		Optional<Customer> customer = customerRepo.findById(addressDto.getCustomerId());
+		Address address=new Address();
+		if(customer.isPresent()) {
+			address.setAddressId(addressDto.getAddressId());			
+			address.setAddress(addressDto.getAddress());
+			address.setCity(addressDto.getCity());
+			address.setCountry(addressDto.getCountry());
+			address.setPincode(addressDto.getPincode());
+			address.setCustomer(customer.get());
 		}
+
 		return addRepo.save(address);  //validation exceptions handled in AddressExceptionHandler--->handleException
 	}
 	
@@ -61,6 +73,14 @@ public class AddressServiceImpl implements IAddressService {
 			throw new AddressNotFoundException("Address not found with the given id: "+addressId);  //exception handled in AddressExceptionHandler---> handleAddressNotFoundException
 		}
 		return opt.get();
+	}
+	
+	// get address by customer id
+	
+	@Override
+	public 	List<AddressDto> getAddressByCustomerId(int customerId) {
+	
+		return addRepo.getAddressByCustomerId(customerId);
 	}
 	
 	
@@ -224,10 +244,10 @@ public class AddressServiceImpl implements IAddressService {
 	}
 
 
-	@Override
-	public List<AddressCustomerDto> getAddressCustomer() {
-		List<AddressCustomerDto> response = addRepo.getAddressCustomer();
-		return response;
-	}
+//	@Override
+//	public List<AddressCustomerDto> getAddressCustomer() {
+//		List<AddressCustomerDto> response = addRepo.getAddressCustomer();
+//		return response;
+//	}
 
 }

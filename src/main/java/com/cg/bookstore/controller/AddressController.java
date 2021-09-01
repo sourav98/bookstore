@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cg.bookstore.dto.AddressCustomerDto;
+import com.cg.bookstore.dto.AddressDto;
 import com.cg.bookstore.dto.AddressStatusDto;
 import com.cg.bookstore.entities.Address;
 import com.cg.bookstore.service.IAddressService;
@@ -35,10 +36,10 @@ public class AddressController
 	IAddressService addServ;
 
 	@PostMapping("/address")
-	public ResponseEntity<Address> addAddress(@Valid @RequestBody Address address)
+	public ResponseEntity<Address> addAddress(@Valid @RequestBody AddressDto addressDto )
 	{
 		LOGGER.info("Adding address via post mapping using Address Controller");
-		return new ResponseEntity<Address>(addServ.addAddress(address), HttpStatus.OK);
+		return new ResponseEntity<Address>(addServ.addAddress(addressDto), HttpStatus.OK);
 	}
 
 	@GetMapping("/address/all")
@@ -147,10 +148,16 @@ public class AddressController
 		return new ResponseEntity<>(addServ.getAddressStatusBySpecificCountry(country), HttpStatus.OK);
 	}
 	
-	@GetMapping("/address/customer")
-	public ResponseEntity<List<AddressCustomerDto>>  getAddressCustomer()
+//	@GetMapping("/address/customer")
+//	public ResponseEntity<List<AddressCustomerDto>>  getAddressCustomer()
+//	{
+//		LOGGER.info("Getting Address by Country");
+//		return new ResponseEntity<>(addServ.getAddressCustomer(), HttpStatus.OK);
+//	}
+	@GetMapping("/address/customer/{customerId}")
+	public ResponseEntity<List<AddressDto>>  getAddressByCustomerId(@PathVariable("customerId") int customerId)
 	{
 		LOGGER.info("Getting Address by Country");
-		return new ResponseEntity<>(addServ.getAddressCustomer(), HttpStatus.OK);
+		return new ResponseEntity<>(addServ.getAddressByCustomerId(customerId), HttpStatus.OK);
 	}
 }

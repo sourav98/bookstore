@@ -45,7 +45,7 @@ public class OrderDetails {
 		@ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE , CascadeType.REFRESH})
 		@JoinColumn(name="order_id_fk")
 		@OnDelete(action = OnDeleteAction.NO_ACTION)
-		private BookOrder bookOrder;
+		private BookOrder bookOrder; 
 		
 		@NotNull(message="Provide the quantity for your order")
 		@Min(value=1, message="Quantity has to be more than 0")

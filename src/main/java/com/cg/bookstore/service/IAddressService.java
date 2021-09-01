@@ -6,13 +6,14 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.cg.bookstore.dto.AddressCustomerDto;
+import com.cg.bookstore.dto.AddressDto;
 import com.cg.bookstore.dto.AddressStatusDto;
 import com.cg.bookstore.entities.Address;
 
 
 
 public interface IAddressService {
-	Address addAddress(Address address); //implementation done, exception handling done, test 1 done, Mockito test done, manual test case done
+	Address addAddress(AddressDto addressDto); //implementation done, exception handling done, test 1 done, Mockito test done, manual test case done
 	Address getById(int addressId);  //implementation done, exception handling done, test 1 done, Mockito test done, manual test done
 	Address deleteById(int addressId);	//implementation done, exception handling done, test 1 done, manual test case done
 	List<Address> getAllAddresses();  //implementation done, exception handling done, test 1 done, Mockito test done, manual test case done
@@ -27,7 +28,8 @@ public interface IAddressService {
 	List<AddressStatusDto> getAddressStatusByCountry(); //implementation done, exception handling done, Mockito test done
 	List<AddressStatusDto> getAddressStatusBySpecificCity(String city); //implementation done, exception handling done, Mockito test done
 	List<AddressStatusDto> getAddressStatusBySpecificCountry(String country); //implementation done, exception handling done, Mockito test done
-	List<AddressCustomerDto> getAddressCustomer();
+//	List<AddressCustomerDto> getAddressCustomer();
+	List<AddressDto> getAddressByCustomerId(int customerId);
 }
 
 
