@@ -20,9 +20,11 @@ public interface IReviewRepository extends JpaRepository<Review, Integer>
 	 * customer);
 	 */
 	
-	@Query(value ="select * from review r where customer_id_fk=(:customerId);", nativeQuery=true) List<Review>
-	 viewReviewByCustomerId(@Param("customerId") int customerId );
+	@Query(value ="select * from review r where customer_id_fk=(:customerId);", nativeQuery=true) 
+	List<Review> viewReviewByCustomerId(@Param("customerId") int customerId );
 
-	
+	@Query(value ="select * from review r where book_id_fk=(:bookId);", nativeQuery=true) 
+	List<Review> viewReviewByBookId(@Param("bookId") int bookId );
+
 
 }

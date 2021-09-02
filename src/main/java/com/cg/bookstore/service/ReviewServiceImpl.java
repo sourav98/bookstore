@@ -165,6 +165,26 @@ public class ReviewServiceImpl implements IReviewService
 		reviewRepository.viewReviewByCustomerId(customerId).forEach(opt::add);
 		return opt;
 	}
+	
+	public List<Review> viewReviewByBookId(int bookId)
+	{
+		LOGGER.info("Fetching a review by id using Review Service Implementation");
+		Optional<Book> book = bookRepo.findById(bookId);
+		List<Review> opt = new ArrayList<>();
+	
+		
+		
+		if (!book.isPresent())
+		{
+			LOGGER.error("No review present");
+			throw new ReviewNotFoundException("Book not found with the given id: " + bookId); // exception handled
+																									// in
+																									// ReviewExceptionHandler--->
+																									// handleException
+		}
+		reviewRepository.viewReviewByBookId(bookId).forEach(opt::add);
+		return opt;
+	}
 
 	/*** update headline by review id ***/
 	public Review updateHeadLine(int reviewId, String headLine)

@@ -8,6 +8,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -21,6 +22,7 @@ import com.cg.bookstore.dto.ReviewDto;
 import com.cg.bookstore.entities.Review;
 import com.cg.bookstore.service.IReviewService;
 
+@CrossOrigin
 @RestController
 public class ReviewController
 {
@@ -96,6 +98,13 @@ public class ReviewController
 	{
 		LOGGER.info("Fetching a particular review using get mapping via Review Controller");
 		return revServ.viewReviewByCustomerId(customerId);
+	}
+	
+	@GetMapping("/review/book/{bookId}")
+	public List<Review> viewReviewByBookId(@PathVariable("bookId") int bookId)
+	{
+		LOGGER.info("Fetching a particular review using get mapping via Review Controller");
+		return revServ.viewReviewByBookId(bookId);
 	}
 
 }

@@ -19,6 +19,7 @@ public interface IReviewService {
 		public Review updateRating(int reviewId,double rating);
 		public Review updateReviewon(int reviewId,String date);
 		public List<Review>viewReviewByCustomerId(int customerId);
+		public List<Review>viewReviewByBookId(int bookId);
 		/*
 		public List<Review> listAllReviewsByBook(Book book); 
 		public List<Review> listAllReviewsByCustomer(Customer c);
