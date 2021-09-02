@@ -26,6 +26,7 @@ public class Address {
 
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int addressId;
 	
 	@ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE , CascadeType.REFRESH})

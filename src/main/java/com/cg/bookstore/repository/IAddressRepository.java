@@ -37,7 +37,7 @@ public interface IAddressRepository extends JpaRepository<Address, Integer>
 //	@Query(value = "select new com.cg.bookstore.dto.AddressCustomerDto(b.customer.customerId,b.customer.fullName,a.address,a.city,a.pincode) from Address a inner join BookOrder b on b.shippingAddress.addressId=a.addressId inner join Customer c on c.customerId=b.customer.customerId")
 //	List<AddressCustomerDto> getAddressCustomer();
 
-	@Query(value = "select new com.cg.bookstore.dto.AddressDto(a.addressId ,a.customer.customerId,a.customer.fullName,a.address,a.city,a.country,a.pincode) from Address a where a.customer.customerId=:customerId")
-	List<AddressDto> getAddressByCustomerId(@Param("customerId") int customerId);
+	@Query(value = "select a from Address a where a.customer.customerId=:customerId")
+	List<Address> getAddressByCustomerId(@Param("customerId") int customerId);
 
 }

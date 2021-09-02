@@ -155,7 +155,7 @@ public class AddressController
 //		return new ResponseEntity<>(addServ.getAddressCustomer(), HttpStatus.OK);
 //	}
 	@GetMapping("/address/customer/{customerId}")
-	public ResponseEntity<List<AddressDto>>  getAddressByCustomerId(@PathVariable("customerId") int customerId)
+	public ResponseEntity<List<Address>>  getAddressByCustomerId(@PathVariable("customerId") int customerId)
 	{
 		LOGGER.info("Getting Address by Country");
 		return new ResponseEntity<>(addServ.getAddressByCustomerId(customerId), HttpStatus.OK);

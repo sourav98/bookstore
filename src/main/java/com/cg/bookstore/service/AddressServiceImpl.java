@@ -14,6 +14,7 @@ import com.cg.bookstore.repository.ICustomerRepository;
 import com.cg.bookstore.dto.AddressCustomerDto;
 import com.cg.bookstore.dto.AddressDto;
 import com.cg.bookstore.dto.AddressStatusDto;
+import com.cg.bookstore.dto.OrderDetailsCustomerDto;
 import com.cg.bookstore.entities.Address;
 import com.cg.bookstore.entities.Customer;
 import com.cg.bookstore.exception.AddressFoundException;
@@ -38,7 +39,7 @@ public class AddressServiceImpl implements IAddressService {
 		Optional<Customer> customer = customerRepo.findById(addressDto.getCustomerId());
 		Address address=new Address();
 		if(customer.isPresent()) {
-			address.setAddressId(addressDto.getAddressId());			
+				
 			address.setAddress(addressDto.getAddress());
 			address.setCity(addressDto.getCity());
 			address.setCountry(addressDto.getCountry());
@@ -78,9 +79,11 @@ public class AddressServiceImpl implements IAddressService {
 	// get address by customer id
 	
 	@Override
-	public 	List<AddressDto> getAddressByCustomerId(int customerId) {
-	
-		return addRepo.getAddressByCustomerId(customerId);
+	public 	List<Address> getAddressByCustomerId(int customerId) {
+		List<Address> opt = new ArrayList<>();
+		addRepo.getAddressByCustomerId(customerId).forEach(opt::add);
+		
+		return opt;
 	}
 	
 	
@@ -89,12 +92,15 @@ public class AddressServiceImpl implements IAddressService {
 	public Address deleteById(int addressId) {
 		LOGGER.info("Deleting a particular address by id using Address Service Implementation");
 		Optional<Address> opt = addRepo.findById(addressId);
-		if(!opt.isPresent()) {
+		List<AddressStatusDto> response = addRepo.getAddressStatus();
+		if(!opt.isPresent()) 
+		{
 			throw new AddressNotFoundException("Address not found with the given id: "+addressId);  //exception handled in AddressExceptionHandler---> handleAddressNotFoundException
 		}
-		
+	
 		addRepo.deleteById(addressId);
 		return opt.get();
+		
 	}
 	
 	

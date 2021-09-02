@@ -29,7 +29,7 @@ public interface IAddressService {
 	List<AddressStatusDto> getAddressStatusBySpecificCity(String city); //implementation done, exception handling done, Mockito test done
 	List<AddressStatusDto> getAddressStatusBySpecificCountry(String country); //implementation done, exception handling done, Mockito test done
 //	List<AddressCustomerDto> getAddressCustomer();
-	List<AddressDto> getAddressByCustomerId(int customerId);
+	List<Address> getAddressByCustomerId(int customerId);
 }
 
 

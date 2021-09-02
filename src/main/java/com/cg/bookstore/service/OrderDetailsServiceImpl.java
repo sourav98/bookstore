@@ -80,7 +80,7 @@ public class OrderDetailsServiceImpl implements IOrderDetailsService
 		if (opt.isEmpty())
 		{
 			LOGGER.error("No orders present");
-			throw new OrderDetailsFoundException("No Orders exist");
+			throw new OrderDetailsNotFoundException("No Orders exist");
 		}
 
 		return opt;
@@ -97,7 +97,7 @@ public class OrderDetailsServiceImpl implements IOrderDetailsService
 		if (opt.isEmpty())
 		{
 			LOGGER.error("No order present");
-			throw new OrderDetailsNotFoundException("Order Details Not Found. Customer Id does not exist");
+			throw new OrderDetailsNotFoundException("You Haven't made any orders");
 		}
 		return opt;
 	}
